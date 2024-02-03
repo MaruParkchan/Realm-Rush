@@ -5,13 +5,45 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] List<WayPoint> path = new List<WayPoint>();
-    [SerializeField] [Range(0.0f, 5.0f)] private float speed = 1.0f;
+    [SerializeField][Range(0.0f, 5.0f)] private float speed = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
+        FindPath();
+        ReturnToStart();
         StartCoroutine(PirntWayPointName());
     }
 
+    // private void FindPath()
+    // {
+    //     path.Clear(); // 기존 경로 초기화
+
+    //     GameObject parent = GameObject.FindGameObjectWithTag("Path");
+
+    //     foreach(Transform child in parent.transform)
+    //     {
+    //         path.Add(child.GetComponent<WayPoint>());
+    //     }
+    // }
+
+    private void FindPath() // 경로 추가 및 정렬
+    {
+        path.Clear(); // 기존 경로 초기화
+
+        GameObject[] wayPoints = GameObject.FindGameObjectsWithTag("Path");
+
+        foreach (GameObject wayPoint in wayPoints)
+        {
+            path.Add(wayPoint.GetComponent<WayPoint>());
+        }
+
+        path.Sort((a, b) => a.name.CompareTo(b.name)); // 오브젝트 경로 순서대로 정렬하기 
+    }
+
+    private void ReturnToStart() // 오브젝트 생성시 경로 처음 설정된 곳에서 나타나기 
+    {
+        transform.position = path[0].transform.position;
+    }
     IEnumerator PirntWayPointName()
     {
         foreach (WayPoint wayPoint in path)
@@ -28,5 +60,7 @@ public class EnemyMover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        Destroy(this.gameObject);
     }
 }
