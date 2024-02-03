@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class WayPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private bool isPlaceable;
+    private void OnMouseOver()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (isPlaceable)
+        {
+            Debug.Log(transform.name);
+        }
     }
 }
