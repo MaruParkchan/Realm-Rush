@@ -1,0 +1,1 @@
+OnMouseDown()을 WayPoint Script에 넣어서 모든 타일에 다 넣고 bool 함수로 설치가 가능한 영역, 불가능영역을 설정하였다.

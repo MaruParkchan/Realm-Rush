@@ -6,7 +6,7 @@ public class EnemyMover : MonoBehaviour
 {
     [SerializeField] List<WayPoint> path = new List<WayPoint>();
     [SerializeField][Range(0.0f, 5.0f)] private float speed = 1.0f;
-    // Start is called before the first frame update
+    private Enemy enemy;
     private void OnEnable()
     {
         FindPath();
@@ -14,17 +14,9 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(PirntWayPointName());
     }
 
-    // private void FindPath()
-    // {
-    //     path.Clear(); // 기존 경로 초기화
-
-    //     GameObject parent = GameObject.FindGameObjectWithTag("Path");
-
-    //     foreach(Transform child in parent.transform)
-    //     {
-    //         path.Add(child.GetComponent<WayPoint>());
-    //     }
-    // }
+    private void Start() {
+        enemy = GetComponent<Enemy>();
+    }
 
     private void FindPath() // 경로 추가 및 정렬
     {
@@ -44,6 +36,7 @@ public class EnemyMover : MonoBehaviour
     {
         transform.position = path[0].transform.position;
     }
+
     IEnumerator PirntWayPointName()
     {
         foreach (WayPoint wayPoint in path)
@@ -61,6 +54,7 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
+        enemy.StealGold();
         gameObject.SetActive(false);
     }
 }
