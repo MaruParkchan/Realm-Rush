@@ -14,7 +14,8 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(PirntWayPointName());
     }
 
-    private void Start() {
+    private void Start()
+    {
         enemy = GetComponent<Enemy>();
     }
 
@@ -22,19 +23,29 @@ public class EnemyMover : MonoBehaviour
     {
         path.Clear(); // 기존 경로 초기화
 
-        GameObject[] wayPoints = GameObject.FindGameObjectsWithTag("Path");
+        GameObject parent = GameObject.FindGameObjectWithTag("Path");
 
-        foreach (GameObject wayPoint in wayPoints)
+        foreach (Transform child in parent.transform)
         {
-            path.Add(wayPoint.GetComponent<WayPoint>());
+            WayPoint wayPoint = child.GetComponent<WayPoint>();
+            if (wayPoint != null)
+            {
+                path.Add(wayPoint);
+            }
         }
 
-        path.Sort((a, b) => a.name.CompareTo(b.name)); // 오브젝트 경로 순서대로 정렬하기 
+        //path.Sort((a, b) => a.name.CompareTo(b.name)); // 오브젝트 경로 순서대로 정렬하기 
     }
 
     private void ReturnToStart() // 오브젝트 생성시 경로 처음 설정된 곳에서 나타나기 
     {
         transform.position = path[0].transform.position;
+    }
+
+    private void FinishPath()
+    {
+        enemy.StealGold();
+        gameObject.SetActive(false);
     }
 
     IEnumerator PirntWayPointName()
@@ -53,8 +64,6 @@ public class EnemyMover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
-
-        enemy.StealGold();
-        gameObject.SetActive(false);
+        FinishPath();
     }
 }
