@@ -26,7 +26,7 @@ public class CoordinateLabeler : MonoBehaviour
         {
             DisPlayCoordinates();
             UpdateObjectName();
-        //    label.enabled = false;
+            label.enabled = true;
         }
 
         ColorCoordinates();

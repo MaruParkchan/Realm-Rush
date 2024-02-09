@@ -34,7 +34,7 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
-        //path.Sort((a, b) => a.name.CompareTo(b.name)); // 오브젝트 경로 순서대로 정렬하기 
+       // path.Sort((a, b) => a.name.CompareTo(b.name)); // 오브젝트 경로 순서대로 정렬하기 
     }
 
     private void ReturnToStart() // 오브젝트 생성시 경로 처음 설정된 곳에서 나타나기 
